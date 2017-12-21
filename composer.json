@@ -1,0 +1,31 @@
+{
+  "name": "yireo-training/magento2-example-simple-extension-attributes",
+  "type": "magento2-module",
+  "version": "0.0.2",
+  "license": "OSL-3.0",
+  "description": "Example module demonstrating usage of extension attributes (and tests)",
+  "keywords":[ "composer-installer", "magento"],
+  "authors": [
+    {
+      "name": "Jisse Reitsma (Yireo)",
+      "email": "jisse@yireo.com"
+    }
+  ],
+  "require": {
+    "magento/framework": "*",
+    "php": ">=7.0.0"
+  },
+  "require-dev":{
+    "phpunit/phpunit":"*",
+    "tddwizard/magento2-fixtures":"^0.3.0",
+    "composer/composer":"*@dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yireo\\ExampleSimpleExtensionAttributes\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}
