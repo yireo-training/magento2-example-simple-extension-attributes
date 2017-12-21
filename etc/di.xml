@@ -8,6 +8,6 @@
         </arguments>
     </type>
     <type name="Magento\Catalog\Api\ProductRepositoryInterface">
-        <plugin name="processExampleAttributes" type="Yireo\ExampleSimpleExtensionAttributes\Plugin\ProcessExampleAttributes" />
+        <plugin name="processExampleSimpleExtensionAttributes" type="Yireo\ExampleSimpleExtensionAttributes\Plugin\ProcessExampleAttributes" />
     </type>
 </config>
