@@ -6,7 +6,6 @@ namespace Yireo\ExampleSimpleExtensionAttributes\Test\Integration;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product as ProductModel;
-use Magento\Catalog\Model\ProductRepository;
 use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
 
 use TddWizard\Fixtures\Catalog\ProductBuilder;

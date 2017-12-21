@@ -12,6 +12,6 @@ class ModuleExistsTest extends Common
     {
         /** @var ModuleListInterface $moduleList */
         $moduleList = $this->createObject(ModuleListInterface::class);
-        $this->assertArrayHasKey('Yireo_ExampleExtensionAttributes', $moduleList->getAll());
+        $this->assertArrayHasKey('Yireo_ExampleSimpleExtensionAttributes', $moduleList->getAll());
     }
 }
