@@ -24,7 +24,7 @@ class InstallSchema implements InstallSchemaInterface
         $connection = $installer->getConnection();
 
         $table = $connection->newTable(
-            $installer->getTable('example_extension_attributes')
+            $installer->getTable('example_simple_extension_attributes')
         )->addColumn(
             'id',
             \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -50,7 +50,7 @@ class InstallSchema implements InstallSchemaInterface
             ['nullable' => true],
             'Training Date End'
         )->setComment(
-            'Yireo_ExampleExtensionAttributes Table'
+            'Yireo_ExampleSimpleExtensionAttributes Table'
         );
 
         $connection->createTable($table);
