@@ -6,11 +6,12 @@ namespace Yireo\ExampleSimpleExtensionAttributes\Test\Integration;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product as ProductModel;
-use Magento\Catalog\Model\ResourceModel\Product as ProductResource;
 
-use TddWizard\Fixtures\Catalog\ProductBuilder;
+use Magento\Framework\Exception\CouldNotSaveException;
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Exception\StateException;
 use TddWizard\Fixtures\Catalog\ProductFixture;
-use TddWizard\Fixtures\Catalog\ProductFixtureRollback;
 
 class ProductExtensionAttributesTest extends Common
 {
@@ -33,65 +34,32 @@ class ProductExtensionAttributesTest extends Common
 
     /**
      * Try to save and load the custom extension attributes
+     *
+     * @magentoDataFixture Magento/Catalog/_files/product_simple.php
+     *
+     * @throws CouldNotSaveException
+     * @throws InputException
+     * @throws NoSuchEntityException
+     * @throws StateException
      */
     public function testSaveAndLoadExtensionAttribute()
     {
         $productRepository = $this->getProductRepository();
-        $product = $productRepository->get('sample01');
+        $product = $productRepository->get('simple');
 
         $date = date('Y-m-d');
-        $product->setTrainingDateStart($date);
+        $product->getExtensionAttributes()->setTrainingDateStart($date);
         $productRepository->save($product);
 
         /** @var ProductModel $product */
-        $newProduct = $productRepository->get('sample01');
-        $this->assertSame($newProduct->getTrainingDateStart(), $product->getTrainingDateStart());
+        $newProduct = $productRepository->get('simple');
+
+        $this->assertSame($newProduct->getExtensionAttributes()->getTrainingDateStart(), $product->getExtensionAttributes()->getTrainingDateStart());
     }
 
     /**
-     * Setup method
+     * @return ProductRepositoryInterface
      */
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->productFixture = new ProductFixture(
-            ProductBuilder::aSimpleProduct()
-                ->withSku('sample01')
-                ->withPrice(10)
-                ->build()
-        );
-    }
-
-    /**
-     * Tear down method
-     */
-    protected function tearDown()
-    {
-        ProductFixtureRollback::create()->execute($this->productFixture);
-    }
-
-    /**
-     * @param int $productId
-     *
-     * @return ProductModel
-     */
-    private function getProductModel(int $productId = 1) : ProductModel
-    {
-        $product = $this->createObject(ProductModel::class);
-        $productResource = $this->getProductResource();
-        $productResource->load($product, $productId);
-
-        return $product;
-    }
-
-    /**
-     * @return ProductResource
-     */
-    private function getProductResource() : ProductResource
-    {
-        return $this->createObject(ProductResource::class);
-    }
-
     private function getProductRepository() : ProductRepositoryInterface
     {
         /** @var ProductRepositoryInterface $productRepository */

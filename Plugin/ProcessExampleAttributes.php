@@ -108,8 +108,8 @@ class ProcessExampleAttributes
         }
 
         $exampleAttributesModel->setProductId((int)$product->getId());
-        $exampleAttributesModel->setTrainingDateStart($product->getExtensionAttributes()->getTrainingDateStart());
-        $exampleAttributesModel->setTrainingDateEnd($product->getExtensionAttributes()->getTrainingDateEnd());
+        $exampleAttributesModel->setTrainingDateStart((string) $product->getExtensionAttributes()->getTrainingDateStart());
+        $exampleAttributesModel->setTrainingDateEnd((string) $product->getExtensionAttributes()->getTrainingDateEnd());
 
         $this->resourceModel->save($exampleAttributesModel);
 

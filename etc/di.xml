@@ -7,7 +7,14 @@
             </argument>
         </arguments>
     </type>
+
     <type name="Magento\Catalog\Api\ProductRepositoryInterface">
         <plugin name="processExampleSimpleExtensionAttributes" type="Yireo\ExampleSimpleExtensionAttributes\Plugin\ProcessExampleAttributes" />
+    </type>
+
+    <type name="Yireo\ExampleSimpleExtensionAttributes\Command\Test">
+        <arguments>
+            <argument name="productRepository" xsi:type="object">Magento\Catalog\Api\ProductRepositoryInterface\Proxy</argument>
+        </arguments>
     </type>
 </config>

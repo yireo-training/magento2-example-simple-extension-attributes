@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace Yireo\ExampleSimpleExtensionAttributes\Test\Integration;
 
-use Magento\Framework\Console\CommandList;
 use Symfony\Component\Console\Tester\CommandTester;
 use Yireo\ExampleSimpleExtensionAttributes\Command\Test;
 
 class CommandTest extends Common
 {
+    /**
+     * @magentoDataFixture Magento/Catalog/_files/product_simple.php
+     */
     public function testIfCommandIsThere()
     {
         $targetCommand = $this->createObject(Test::class);
