@@ -5,9 +5,13 @@ namespace Yireo\ExampleSimpleExtensionAttributes\Plugin;
 
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\Exception\AlreadyExistsException;
+
 use Yireo\ExampleSimpleExtensionAttributes\Model\ExampleAttributes;
 use Yireo\ExampleSimpleExtensionAttributes\Model\ResourceModel\ExampleAttributes as ResourceModel;
-use Yireo\ExampleSimpleExtensionAttributes\Model\ExampleAttributes as RegularModel;
+use Yireo\ExampleSimpleExtensionAttributes\Model\ExampleAttributesFactory as ModelFactory;
+use Yireo\ExampleSimpleExtensionAttributes\Model\ExampleAttributes as Model;
+use Yireo\ExampleSimpleExtensionAttributes\Model\ResourceModel\ExampleAttributes\CollectionFactory;
 
 /**
  * Class ProcessExampleAttributes
@@ -22,23 +26,29 @@ class ProcessExampleAttributes
     private $resourceModel;
 
     /**
-     * @var RegularModel
+     * @var ModelFactory
      */
-    private $model;
+    private $modelFactory;
+    /**
+     * @var CollectionFactory
+     */
+    private $collectionFactory;
 
     /**
      * ProcessExampleAttributes constructor.
      *
-     * @param RegularModel $model
+     * @param ModelFactory $modelFactory
      * @param ResourceModel $resourceModel
+     * @param CollectionFactory $collectionFactory
      */
     public function __construct(
-        RegularModel $model,
-        ResourceModel $resourceModel
-    )
-    {
+        ModelFactory $modelFactory,
+        ResourceModel $resourceModel,
+        CollectionFactory $collectionFactory
+    ) {
         $this->resourceModel = $resourceModel;
-        $this->model = $model;
+        $this->modelFactory = $modelFactory;
+        $this->collectionFactory = $collectionFactory;
     }
 
     /**
@@ -83,12 +93,13 @@ class ProcessExampleAttributes
      * @param bool $saveOptions
      *
      * @return array
+     * @throws AlreadyExistsException
      */
     public function beforeSave(ProductRepositoryInterface $productRepository, ProductInterface $product, $saveOptions = false)
     {
         $exampleAttributesModel = $this->getExampleAttributesByProduct($product);
         if (!$exampleAttributesModel) {
-            $exampleAttributesModel = $this->model;
+            $exampleAttributesModel = $this->modelFactory->create();
         }
 
         $extensionAttributes = $product->getExtensionAttributes();
@@ -108,15 +119,16 @@ class ProcessExampleAttributes
     /**
      * @param ProductInterface $product
      *
-     * @return RegularModel
+     * @return Model
      */
-    private function getExampleAttributesByProduct(ProductInterface $product) : ExampleAttributes
+    private function getExampleAttributesByProduct(ProductInterface $product): ExampleAttributes
     {
-        $collection = $this->model->getCollection();
+        $collection = $this->collectionFactory->create();
         $collection->addFieldToFilter('product_id', $product->getId());
 
         /** @var ExampleAttributes $firstItem */
         $firstItem = $collection->getFirstItem();
+
         return $firstItem;
     }
 }
