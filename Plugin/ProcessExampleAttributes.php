@@ -29,6 +29,7 @@ class ProcessExampleAttributes
      * @var ModelFactory
      */
     private $modelFactory;
+
     /**
      * @var CollectionFactory
      */
@@ -95,8 +96,11 @@ class ProcessExampleAttributes
      * @return array
      * @throws AlreadyExistsException
      */
-    public function beforeSave(ProductRepositoryInterface $productRepository, ProductInterface $product, $saveOptions = false)
-    {
+    public function beforeSave(
+        ProductRepositoryInterface $productRepository,
+        ProductInterface $product,
+        $saveOptions = false
+    ) {
         $exampleAttributesModel = $this->getExampleAttributesByProduct($product);
         if (!$exampleAttributesModel) {
             $exampleAttributesModel = $this->modelFactory->create();
@@ -108,8 +112,8 @@ class ProcessExampleAttributes
         }
 
         $exampleAttributesModel->setProductId((int)$product->getId());
-        $exampleAttributesModel->setTrainingDateStart((string) $product->getExtensionAttributes()->getTrainingDateStart());
-        $exampleAttributesModel->setTrainingDateEnd((string) $product->getExtensionAttributes()->getTrainingDateEnd());
+        $exampleAttributesModel->setTrainingDateStart((string)$product->getExtensionAttributes()->getTrainingDateStart());
+        $exampleAttributesModel->setTrainingDateEnd((string)$product->getExtensionAttributes()->getTrainingDateEnd());
 
         $this->resourceModel->save($exampleAttributesModel);
 
