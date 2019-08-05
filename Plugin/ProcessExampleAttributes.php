@@ -65,8 +65,15 @@ class ProcessExampleAttributes
             return $product;
         }
 
-        $product->getExtensionAttributes()->setTrainingDateStart($exampleAttributesModel->getTrainingDateStart());
-        $product->getExtensionAttributes()->setTrainingDateEnd($exampleAttributesModel->getTrainingDateEnd());
+        $extensionAttributes = $product->getExtensionAttributes();
+        if (is_callable([$extensionAttributes, 'setTrainingDateStart'])) {
+            $product->getExtensionAttributes()->setTrainingDateStart($exampleAttributesModel->getTrainingDateStart());
+        }
+
+        if (is_callable([$extensionAttributes, 'setTrainingDateEnd'])) {
+            $product->getExtensionAttributes()->setTrainingDateEnd($exampleAttributesModel->getTrainingDateStart());
+        }
+
         return $product;
     }
 
@@ -83,8 +90,15 @@ class ProcessExampleAttributes
             return $product;
         }
 
-        $product->getExtensionAttributes()->setTrainingDateStart($exampleAttributesModel->getTrainingDateStart());
-        $product->getExtensionAttributes()->setTrainingDateEnd($exampleAttributesModel->getTrainingDateEnd());
+        $extensionAttributes = $product->getExtensionAttributes();
+        if (is_callable([$extensionAttributes, 'setTrainingDateStart'])) {
+            $product->getExtensionAttributes()->setTrainingDateStart($exampleAttributesModel->getTrainingDateStart());
+        }
+
+        if (is_callable([$extensionAttributes, 'setTrainingDateEnd'])) {
+            $product->getExtensionAttributes()->setTrainingDateEnd($exampleAttributesModel->getTrainingDateStart());
+        }
+
         return $product;
     }
 
